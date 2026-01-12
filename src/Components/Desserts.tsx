@@ -26,55 +26,110 @@ type DesertsData = {
 interface DesertProps {
     dessertsDataProp: DesertsData[];
     addToCartFunc: (item: CartItem) => void;
+    cartItemsData: CartItem[];
+    qtyInc: (name: string) => void;
+    qtyDec: (name: string) => void;
 }
 
-function Desserts({ dessertsDataProp, addToCartFunc }: DesertProps) {
-    console.log(dessertsDataProp);
+function Desserts({
+    dessertsDataProp,
+    addToCartFunc,
+    cartItemsData,
+    qtyInc,
+    qtyDec,
+}: DesertProps) {
+    function makeCartItem(item: DesertsData) {
+        const cartItem: CartItem = {
+            name: item.name,
+            thumbnail: item.image.thumbnail,
+            quantity: 1,
+            price: item.price,
+        };
+
+        addToCartFunc(cartItem);
+    }
+
     return (
         <section>
             <h1 className="font-bold text-4xl mb-5">Desserts</h1>
-            <section>
-                {dessertsDataProp.map((dessert) => (
-                    <div key={dessert.image.mobile}>
-                        <img
-                            src={dessert.image.mobile}
-                            alt={`image of serving of a ${dessert.name}`}
-                            className="md:hidden"
-                        />
-                        <img
-                            src={dessert.image.tablet}
-                            alt={`image of serving of a ${dessert.name}`}
-                            className="hidden md:block lg:hidden"
-                        />
-                        <img
-                            src={dessert.image.desktop}
-                            alt={`image of serving of a ${dessert.name}`}
-                            className="hidden lg:block"
-                        />
-                        <div>
-                            <div>
-                                <button type="button">
-                                    <span>
-                                        <img src={cartIcon} alt="" /> Add to
-                                        Cart
-                                    </span>
-                                </button>
-                                <div>
-                                    <button>
-                                        <img src={decreaseIcon} alt="" />
-                                    </button>
-                                    <span>1</span>
-                                    <button>
-                                        <img src={increaseIcon} alt="" />
-                                    </button>
-                                </div>
+            <section className="grid gap-4">
+                {dessertsDataProp.map((dessert) => {
+                    const cartItem = cartItemsData.find(
+                        (cart) => cart.name === dessert.name
+                    );
+                    const quantity = cartItem?.quantity ?? 0;
+
+                    return (
+                        <div
+                            key={dessert.image.mobile}
+                            className="border border-Green"
+                        >
+                            <div className="rounded-lg overflow-hidden">
+                                <img
+                                    src={dessert.image.mobile}
+                                    alt={`image of serving of a ${dessert.name}`}
+                                    className="md:hidden"
+                                />
+                                <img
+                                    src={dessert.image.tablet}
+                                    alt={`image of serving of a ${dessert.name}`}
+                                    className="hidden md:block lg:hidden"
+                                />
+                                <img
+                                    src={dessert.image.desktop}
+                                    alt={`image of serving of a ${dessert.name}`}
+                                    className="hidden lg:block"
+                                />
                             </div>
-                            <p>{dessert.category}</p>
-                            <p>{dessert.name}</p>
-                            <p>${dessert.price}</p>
+                            <article className="border border-Rose-400">
+                                <div>
+                                    {quantity < 1 ? (
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                makeCartItem(dessert)
+                                            }
+                                        >
+                                            <span>
+                                                <img src={cartIcon} alt="" />{" "}
+                                                Add to Cart
+                                            </span>
+                                        </button>
+                                    ) : (
+                                        <div className="bg-Red">
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    qtyDec(dessert.name)
+                                                }
+                                            >
+                                                <img
+                                                    src={decreaseIcon}
+                                                    alt=""
+                                                />
+                                            </button>
+                                            <span>{quantity}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    qtyInc(dessert.name)
+                                                }
+                                            >
+                                                <img
+                                                    src={increaseIcon}
+                                                    alt=""
+                                                />
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                                <p>{dessert.category}</p>
+                                <p>{dessert.name}</p>
+                                <p>${dessert.price}</p>
+                            </article>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </section>
         </section>
     );

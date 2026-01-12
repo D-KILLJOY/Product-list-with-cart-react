@@ -37,12 +37,40 @@ function App() {
         setCartItems((prev) => [...prev, item]);
     }
 
+    function increaseQty(name: string) {
+        setCartItems((prev) =>
+            prev.map((item) =>
+                item.name === name
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            )
+        );
+    }
+
+    function decreaseQty(name: string) {
+        setCartItems((prev) =>
+            prev
+                .map((item) =>
+                    item.name === name
+                        ? { ...item, quantity: item.quantity - 1 }
+                        : item
+                )
+                .filter((item) => item.quantity > 0)
+        );
+    }
+
     console.log(dessertData);
     console.log(cartItems);
 
     return (
         <main className="p-4">
-            <Desserts dessertsDataProp={desserts} addToCartFunc={addToCart} />
+            <Desserts
+                dessertsDataProp={desserts}
+                cartItemsData={cartItems}
+                addToCartFunc={addToCart}
+                qtyInc={increaseQty}
+                qtyDec={decreaseQty}
+            />
             <Cart />
             <Confirmation />
         </main>
