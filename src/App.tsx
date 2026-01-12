@@ -38,6 +38,7 @@ function App() {
     }
 
     console.log(dessertData);
+    console.log(cartItems);
 
     return (
         <main className="p-4">

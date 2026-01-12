@@ -1,10 +1,6 @@
 import cartIcon from "../assets/images/icon-add-to-cart.svg";
-import carbonIcon from "../assets/images/icon-carbon-neutral.svg";
 import increaseIcon from "../assets/images/icon-increment-quantity.svg";
 import decreaseIcon from "../assets/images/icon-decrement-quantity.svg";
-import confirmedIcon from "../assets/images/icon-order-confirmed.svg";
-import removeIcon from "../assets/images/icon-remove-item.svg";
-import emptyIllustration from "../assets/images/illustration-empty-cart.svg";
 
 type CartItem = {
     name: string;
@@ -38,26 +34,47 @@ function Desserts({ dessertsDataProp, addToCartFunc }: DesertProps) {
         <section>
             <h1 className="font-bold text-4xl mb-5">Desserts</h1>
             <section>
-                <div>
-                    <img src="" alt="" />
-                    <div>
+                {dessertsDataProp.map((dessert) => (
+                    <div key={dessert.image.mobile}>
+                        <img
+                            src={dessert.image.mobile}
+                            alt={`image of serving of a ${dessert.name}`}
+                            className="md:hidden"
+                        />
+                        <img
+                            src={dessert.image.tablet}
+                            alt={`image of serving of a ${dessert.name}`}
+                            className="hidden md:block lg:hidden"
+                        />
+                        <img
+                            src={dessert.image.desktop}
+                            alt={`image of serving of a ${dessert.name}`}
+                            className="hidden lg:block"
+                        />
                         <div>
-                            <button>
-                                <span>
-                                    <img src="" alt="" /> Add to Cart
-                                </span>
-                            </button>
                             <div>
-                                <button></button>
-                                <span>1</span>
-                                <button></button>
+                                <button type="button">
+                                    <span>
+                                        <img src={cartIcon} alt="" /> Add to
+                                        Cart
+                                    </span>
+                                </button>
+                                <div>
+                                    <button>
+                                        <img src={decreaseIcon} alt="" />
+                                    </button>
+                                    <span>1</span>
+                                    <button>
+                                        <img src={increaseIcon} alt="" />
+                                    </button>
+                                </div>
                             </div>
+                            <p>{dessert.category}</p>
+                            <p>{dessert.name}</p>
+                            <p>${dessert.price}</p>
                         </div>
-                        <p></p>
-                        <p></p>
-                        <p></p>
                     </div>
-                </div>
+                ))}
             </section>
         </section>
     );
