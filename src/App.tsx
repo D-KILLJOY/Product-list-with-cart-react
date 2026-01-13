@@ -63,7 +63,7 @@ function App() {
     console.log(cartItems);
 
     return (
-        <main className="p-4">
+        <main className="p-4 relative">
             <Desserts
                 dessertsDataProp={desserts}
                 cartItemsData={cartItems}
