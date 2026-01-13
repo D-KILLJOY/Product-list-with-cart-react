@@ -60,10 +60,7 @@ function Desserts({
                     const quantity = cartItem?.quantity ?? 0;
 
                     return (
-                        <div
-                            key={dessert.image.mobile}
-                            className={`border border-Green `}
-                        >
+                        <div key={dessert.image.mobile}>
                             <div
                                 className={`rounded-lg overflow-hidden ${quantity >= 1 && "border-3 border-Red"}`}
                             >
@@ -83,24 +80,26 @@ function Desserts({
                                     className="hidden lg:block"
                                 />
                             </div>
-                            <article className="border border-Rose-400">
+                            <article className=" relative">
                                 <div>
                                     {quantity < 1 ? (
                                         <button
+                                            className="border rounded-full border-Rose-500 flex gap-1 items-center justify-center bg-Rose-50 h-10 w-1/2  -translate-y-1/2 translate-x-1/2 cursor-pointer"
                                             type="button"
                                             onClick={() =>
                                                 makeCartItem(dessert)
                                             }
                                         >
-                                            <span>
-                                                <img src={cartIcon} alt="" />{" "}
+                                            <img src={cartIcon} alt="" />{" "}
+                                            <p className="text-xs font-semibold text-Rose-900">
                                                 Add to Cart
-                                            </span>
+                                            </p>
                                         </button>
                                     ) : (
-                                        <div className="bg-Red">
+                                        <div className="bg-Red border border-Red rounded-full flex items-center justify-between px-3 h-10 w-1/2 -translate-y-1/2 translate-x-1/2 cursor-pointer">
                                             <button
                                                 type="button"
+                                                className="border rounded-full h-4 w-4 flex justify-center items-center border-Rose-100"
                                                 onClick={() =>
                                                     qtyDec(dessert.name)
                                                 }
@@ -110,9 +109,12 @@ function Desserts({
                                                     alt=""
                                                 />
                                             </button>
-                                            <span>{quantity}</span>
+                                            <span className="font-semibold text-Rose-100 text-sm">
+                                                {quantity}
+                                            </span>
                                             <button
                                                 type="button"
+                                                className="border rounded-full h-4 w-4 flex justify-center items-center border-Rose-100"
                                                 onClick={() =>
                                                     qtyInc(dessert.name)
                                                 }
@@ -125,9 +127,15 @@ function Desserts({
                                         </div>
                                     )}
                                 </div>
-                                <p>{dessert.category}</p>
-                                <p>{dessert.name}</p>
-                                <p>${dessert.price}</p>
+                                <p className="text-xs text-Rose-400 font-medium mb-1">
+                                    {dessert.category}
+                                </p>
+                                <p className="text-sm font-semibold text-Rose-900 mb-1">
+                                    {dessert.name}
+                                </p>
+                                <p className="text-sm text-Red font-semibold ">
+                                    ${dessert.price.toFixed(2)}
+                                </p>
                             </article>
                         </div>
                     );
