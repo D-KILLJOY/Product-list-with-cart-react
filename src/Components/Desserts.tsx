@@ -62,9 +62,11 @@ function Desserts({
                     return (
                         <div
                             key={dessert.image.mobile}
-                            className="border border-Green"
+                            className={`border border-Green `}
                         >
-                            <div className="rounded-lg overflow-hidden">
+                            <div
+                                className={`rounded-lg overflow-hidden ${quantity >= 1 && "border-3 border-Red"}`}
+                            >
                                 <img
                                     src={dessert.image.mobile}
                                     alt={`image of serving of a ${dessert.name}`}
