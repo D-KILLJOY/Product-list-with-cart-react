@@ -29,9 +29,12 @@ type DessertsData = {
 function App() {
     const desserts: DessertsData[] = dessertData;
 
-    console.log(desserts);
-
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [orderStat, setOrderStat] = useState<"order" | "confirmed">("order");
+
+    function toggleOrderState() {
+        setOrderStat((prev) => (prev === "order" ? "confirmed" : "order"));
+    }
 
     function addToCart(item: CartItem) {
         setCartItems((prev) => [...prev, item]);
@@ -59,8 +62,24 @@ function App() {
         );
     }
 
-    console.log(dessertData);
-    console.log(cartItems);
+    function removeItem(name: string) {
+        setCartItems((prev) => prev.filter((item) => item.name !== name));
+    }
+
+    const cartTotalItems = cartItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
+
+    const cartTotalPrice = cartItems.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+    );
+
+    function startNewOrder() {
+        toggleOrderState();
+        setCartItems([]);
+    }
 
     return (
         <main className="p-4 relative">
@@ -71,8 +90,20 @@ function App() {
                 qtyInc={increaseQty}
                 qtyDec={decreaseQty}
             />
-            <Cart />
-            <Confirmation />
+            <Cart
+                orderToggle={toggleOrderState}
+                mainCart={cartItems}
+                removeFunc={removeItem}
+                cartItemTotal={cartTotalItems}
+                cartPriceTotal={cartTotalPrice}
+            />
+            {orderStat === "confirmed" && (
+                <Confirmation
+                    orderToggle={startNewOrder}
+                    mainCart={cartItems}
+                    cartPriceTotal={cartTotalPrice}
+                />
+            )}
         </main>
     );
 }

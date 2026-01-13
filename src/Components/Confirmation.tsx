@@ -1,6 +1,18 @@
 import confirmedIcon from "../assets/images/icon-order-confirmed.svg";
 
-function Confirmation() {
+type CartItem = {
+    name: string;
+    thumbnail: string;
+    quantity: number;
+    price: number;
+};
+interface ConfProps {
+    orderToggle: () => void;
+    mainCart: CartItem[];
+    cartPriceTotal: number;
+}
+
+function Confirmation({ orderToggle, mainCart, cartPriceTotal }: ConfProps) {
     return (
         <section className="fixed inset-0 w-full h-screen flex justify-center items-center bg-black/60">
             <div className="bg-Rose-50 rounded-2xl py-8 px-5">
@@ -17,41 +29,49 @@ function Confirmation() {
                 </p>
 
                 <ul className="m-5 overflow-scroll max-h-70">
-                    <li className="py-5 border-b border-b-Rose-100">
-                        <div className="flex items-center">
-                            <img
-                                src="../../public/assets/images/image-baklava-thumbnail.jpg"
-                                alt=""
-                                className="w-12 h-12 rounded me-4"
-                            />
-                            <div>
-                                <p className="text-sm text-Rose-900 font-bold mb-1">
-                                    Classic Tiramisu
-                                </p>
-                                <p className="text-sm flex gap-4">
-                                    <span className="text-Red font-semibold ">
-                                        1x
-                                    </span>
-                                    <span className="text-Rose-400 font-medium">
-                                        @ $5.50
-                                    </span>
+                    {mainCart.map((item) => (
+                        <li
+                            className="py-5 border-b border-b-Rose-100"
+                            key={item.name}
+                        >
+                            <div className="flex items-center">
+                                <img
+                                    src={item.thumbnail}
+                                    alt={`image of a serving of ${item.name}`}
+                                    className="w-12 h-12 rounded me-4"
+                                />
+                                <div>
+                                    <p className="text-sm text-Rose-900 font-bold mb-1">
+                                        {item.name}
+                                    </p>
+                                    <p className="text-sm flex gap-4">
+                                        <span className="text-Red font-semibold ">
+                                            {item.quantity}x
+                                        </span>
+                                        <span className="text-Rose-400 font-medium">
+                                            @ ${item.price}
+                                        </span>
+                                    </p>
+                                </div>
+                                <p className="ms-auto font-semibold text-Rose-900">
+                                    ${(item.quantity * item.price).toFixed(2)}
                                 </p>
                             </div>
-                            <p className="ms-auto font-semibold text-Rose-900">
-                                $5.50
-                            </p>
-                        </div>
-                    </li>
+                        </li>
+                    ))}
                 </ul>
                 <div className=" flex justify-between items-center px-5">
                     <p className="text-xs text-Rose-500 font-medium">
                         Order Total
                     </p>
-                    <p className="font-bold text-Rose-900 text-xl">$46.50</p>
+                    <p className="font-bold text-Rose-900 text-xl">
+                        ${cartPriceTotal.toFixed(2)}
+                    </p>
                 </div>
 
                 <button
                     type="button"
+                    onClick={orderToggle}
                     className="mt-10 border border-Red bg-Red text-sm font-semibold text-Rose-100 w-full h-12 rounded-full cursor-pointer"
                 >
                     Start New Order
