@@ -82,14 +82,16 @@ function App() {
     }
 
     return (
-        <main className="p-4 relative">
-            <Desserts
-                dessertsDataProp={desserts}
-                cartItemsData={cartItems}
-                addToCartFunc={addToCart}
-                qtyInc={increaseQty}
-                qtyDec={decreaseQty}
-            />
+        <main className="p-4 mx-auto w-full max-w-300 relative grid md:p-10 md:grid-cols-3">
+            <div className="md:col-span-2">
+                <Desserts
+                    dessertsDataProp={desserts}
+                    cartItemsData={cartItems}
+                    addToCartFunc={addToCart}
+                    qtyInc={increaseQty}
+                    qtyDec={decreaseQty}
+                />{" "}
+            </div>
             <Cart
                 orderToggle={toggleOrderState}
                 mainCart={cartItems}

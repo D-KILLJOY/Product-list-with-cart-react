@@ -52,7 +52,7 @@ function Desserts({
     return (
         <section>
             <h1 className="font-bold text-4xl mb-5">Desserts</h1>
-            <section className="grid gap-4">
+            <section className="grid gap-4 md:grid md:grid-cols-2 lg:grid-cols-3">
                 {dessertsDataProp.map((dessert) => {
                     const cartItem = cartItemsData.find(
                         (cart) => cart.name === dessert.name
@@ -99,14 +99,14 @@ function Desserts({
                                         <div className="bg-Red border border-Red rounded-full flex items-center justify-between px-3 h-10 w-1/2 -translate-y-1/2 translate-x-1/2 cursor-pointer">
                                             <button
                                                 type="button"
-                                                className="border rounded-full h-4 w-4 flex justify-center items-center border-Rose-100"
+                                                className="border rounded-full h-4 w-4 flex justify-center items-center border-Rose-100 cursor-pointer"
                                                 onClick={() =>
                                                     qtyDec(dessert.name)
                                                 }
                                             >
                                                 <img
                                                     src={decreaseIcon}
-                                                    alt=""
+                                                    alt="- icon"
                                                 />
                                             </button>
                                             <span className="font-semibold text-Rose-100 text-sm">
@@ -114,14 +114,14 @@ function Desserts({
                                             </span>
                                             <button
                                                 type="button"
-                                                className="border rounded-full h-4 w-4 flex justify-center items-center border-Rose-100"
+                                                className="border rounded-full h-4 w-4 flex justify-center items-center border-Rose-100 cursor-pointer"
                                                 onClick={() =>
                                                     qtyInc(dessert.name)
                                                 }
                                             >
                                                 <img
                                                     src={increaseIcon}
-                                                    alt=""
+                                                    alt="+ icon"
                                                 />
                                             </button>
                                         </div>

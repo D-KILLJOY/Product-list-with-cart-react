@@ -24,21 +24,21 @@ function Cart({
     cartPriceTotal,
 }: CartProps) {
     return (
-        <section className="my-10 p-5">
-            <h2 className="text-Red text-2xl font-bold">
+        <section className="my-10 p-5 md:my-0 md:pt-0">
+            <h2 className="text-Red text-2xl font-bold md:mb-5">
                 Your Cart <span>({cartItemTotal})</span>
             </h2>
             <article>
                 {mainCart.length < 1 ? (
                     <div className="flex flex-col justify-center items-center my-10">
                         <img src={emptyIllustration} alt="" />
-                        <p className="font-semibold text-Rose-400 mt-5">
+                        <p className="font-semibold text-Rose-400 mt-5 text-center">
                             Your added items will appear here
                         </p>
                     </div>
                 ) : (
                     <>
-                        <ul className="flex flex-col gap-7">
+                        <ul className="flex flex-col gap-7 ">
                             {mainCart.map((item) => (
                                 <li
                                     className="flex justify-between items-center"
@@ -83,7 +83,7 @@ function Cart({
 
                         <div className="flex justify-center items-center gap-2">
                             <img src={carbonIcon} alt="" />
-                            <p className="text-Rose-900 text-xs">
+                            <p className="text-Rose-900 text-xs text-center">
                                 This is a{" "}
                                 <span className="font-bold">
                                     carbon-neutral
